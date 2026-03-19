@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Federal Energia | Portal de Relatorios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-logo">
+    <img src="Federal Energia.png" alt="logofederal" width="130">
+  </div>
+
+  <div class="page-shell">
+    <aside class="brand-panel">
+      <div class="brand-copy">
+       
+        <h1>Painel de automação de relatórios <br>
+        </h1>
+        <p class="description">
+          <br><br>Acesse o portal, informe o período, selecione o banco e extraia o relatório.
+        </p>
+      </div>
+    
+    </aside>
+
+    <main class="content-panel">
+      <section class="card" id="loginCard">
+        <div class="card-header">
+          <p class="section-tag">Acesso</p>
+          <h2>Entrar no portal</h2>
+          <p>Use suas credenciais para acessar o portal.</p>
+        </div>
+
+        <form id="loginForm" class="form-grid">
+          <label class="field field-full">
+            <span>E-mail</span>
+            <input type="email" id="email" placeholder="seu.email@federalenergia.com.br" required>
+          </label>
+
+          <label class="field field-full">
+            <span>Token</span>
+            <input type="password" id="password" placeholder="Digite seu token" required>
+          </label>
+
+          <button type="submit" class="action-button" id="loginButton">
+            <span class="button-label">Entrar</span>
+            <span class="button-spinner" aria-hidden="true">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </span>
+          </button>
+        </form>
+
+        <p class="feedback" id="loginFeedback" aria-live="polite"></p>
+      </section>
+
+      <section class="card hidden" id="reportCard">
+        <div class="card-header">
+          <p class="section-tag">Relatorio</p>
+          <h2>Gerar relatorio</h2>
+          <p>Preencha os dados abaixo para gerar o relatorio.</p>
+        </div>
+
+        <form id="reportForm" class="form-grid">
+          <label class="field">
+            <span id="startDateLabel">Data inicio</span>
+            <input type="date" id="startDate" lang="pt-BR" required>
+          </label>
+
+          <label class="field">
+            <span id="endDateLabel">Data fim</span>
+            <input type="date" id="endDate" lang="pt-BR" required>
+          </label>
+
+          <label class="field field-full">
+            <span>Banco</span>
+            <input type="text" id="bank" placeholder="Ex.: 341" required>
+          </label>
+
+          <label class="field">
+            <span>Filial</span>
+            <input type="text" id="filial" placeholder="Ex.: 1532" required>
+          </label>
+          
+          <label class="field">
+            <span>Agencia</span>
+            <input type="text" id="agencia" placeholder="Ex.: 3175-" required>
+          </label>
+
+          <label class="field field-full">
+            <span>Conta</span>
+            <input type="text" id="conta" placeholder="Ex.: 1835" required>
+          </label>
+
+
+          <button type="submit" class="action-button" id="reportButton">
+            <span class="button-label">Confirmar</span>
+            <span class="button-spinner" aria-hidden="true">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </span>
+          </button>
+        </form>
+
+        <div class="output-panel">
+          <div class="output-header">
+            <h3>Resultado do relatorio</h3>
+            <div class="output-actions">
+              <span id="reportStatus" class="status-pill">Aguardando envio</span>
+              <button type="button" id="downloadPdfButton" class="secondary-button" disabled>Baixar PDF</button>
+            </div>
+          </div>
+          <textarea id="reportOutput" rows="7" readonly placeholder="Quando o relatorio for gerado, o retorno aparecera aqui."></textarea>
+          <iframe id="reportPreview" class="report-preview hidden" title="Visualizacao do relatorio"></iframe>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="loading-overlay hidden" id="loadingOverlay" aria-live="assertive" aria-busy="true">
+    <div class="loading-box">
+      <span class="loading-dots" aria-hidden="true">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </span>
+      <p id="loadingText">Processando...</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
