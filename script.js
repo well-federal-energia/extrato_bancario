@@ -176,8 +176,6 @@ function downloadReportAsPdf() {
     ? lastReportContent
     : `<pre>${escapeHtml(lastReportContent)}</pre>`;
 
-  const logoUrl = new URL("Federal Energia.png", window.location.href).href;
-
   printableWindow.document.write(`
     <!DOCTYPE html>
     <html lang="pt-BR">
@@ -199,11 +197,6 @@ function downloadReportAsPdf() {
           color: #153761;
           background: #ffffff;
         }
-        .pdf-logo {
-          display: block;
-          max-height: 60px;
-          margin-bottom: 24px;
-        }
         pre {
           white-space: pre-wrap;
           word-break: break-word;
@@ -217,7 +210,6 @@ function downloadReportAsPdf() {
       </style>
     </head>
     <body>
-      <img src="${logoUrl}" alt="Federal Energia" width="100" class="pdf-logo">
       ${printableContent}
       <script>
         window.onload = function () {
