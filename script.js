@@ -141,9 +141,35 @@ function showHtmlResult(htmlContent) {
   reportPreview.srcdoc = htmlContent;
 }
 
+function removeReportLogos(htmlContent) {
+  try {
+    const parser = new DOMParser();
+    const documentFragment = parser.parseFromString(htmlContent, "text/html");
+
+    documentFragment
+      .querySelectorAll('img[src*="Federal"], img[src*="federal"], img[alt*="Federal"], img[alt*="federal"]')
+      .forEach((imageElement) => imageElement.remove());
+
+    return /<\/html>/i.test(htmlContent)
+      ? documentFragment.documentElement.outerHTML
+      : documentFragment.body.innerHTML;
+  } catch {
+    return String(htmlContent).replace(/<img[^>]*(Federal|federal)[^>]*>/g, "");
+  }
+}
+
 function applyReportStyleOverrides(htmlContent) {
+  const sanitizedHtmlContent = removeReportLogos(htmlContent);
+
   const overrideStyle = `
     <style>
+      .header img,
+      img[alt*="Federal"],
+      img[src*="Federal"],
+      img[alt*="federal"],
+      img[src*="federal"] {
+        display: none !important;
+      }
       .header h1 {
         font-size: 1.45rem !important;
         line-height: 1.2 !important;
@@ -152,11 +178,11 @@ function applyReportStyleOverrides(htmlContent) {
     </style>
   `;
 
-  if (/<\/head>/i.test(htmlContent)) {
-    return htmlContent.replace(/<\/head>/i, `${overrideStyle}</head>`);
+  if (/<\/head>/i.test(sanitizedHtmlContent)) {
+    return sanitizedHtmlContent.replace(/<\/head>/i, `${overrideStyle}</head>`);
   }
 
-  return `${overrideStyle}${htmlContent}`;
+  return `${overrideStyle}${sanitizedHtmlContent}`;
 }
 
 function downloadReportAsPdf() {
